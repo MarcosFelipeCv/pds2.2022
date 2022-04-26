@@ -9,4 +9,5 @@ int main() {
 
 //      g++ main.cpp -o programa
 //      ./programa < in.txt
-teste
+//      git add-commit -m "message"
+//      git pu
