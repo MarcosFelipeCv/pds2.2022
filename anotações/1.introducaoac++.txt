@@ -1,0 +1,133 @@
+AULA 31/03/22 ------------------------------------------------------------------------------------------------
+a main é necessariamente a primeira a ser executada
+toda funcao tem dominio e contradominio
+a funcao main pode receber parametros, mas não é comum receber
+a main retorna inteiro (para o sistema operacional)
+se retorna 0, ok. se deu erro retorna 1.
+
+c++ é feita pra ser eficiente, menos intruções de maquina possíveis
+programa deve ser pequeno
+
+c++ puro é pequeno, por isso são necessarias bibliotecas
+
+nao é foco da disciplina a questao de entrada, interface de usuario e tal. o escopo do curso é computação
+
+cin == teclado (nesse caso)
+>> == operador de extração
+
+cin>> retorna um verdadeiro enquanto ele consegue ler do teclado, o que permite que coisas como
+        int i;
+        while (cin>>i){
+            cout<<i*i<<endl;
+        }
+por exemplo
+cout é a saida padrao do sistema, pode ser mudade com > out.txt por exemplo
+cin é a entrada padrao do sistema, pode ser um arquivo por exemplo, quando usamos < in.txt na execução
+
+AULA 5/4/22---------------------------------------------------------------------------------------------------
+
+bool guarda 1 unico byte, apenas um true or false, em forma de 1 e 0
+o bool pode receber uma expressão
+        bool x(3>5);
+retorna negativo por ex
+a vantagem do bool é a legibilidade, de algo true or false apenas.
+
+tipo string guarda texto, mas não é um tipo primitivo da linguagem, é um TAD, o que necessita o #include <string>
+strings podem ser concatenadas com o operador +
+
+getline é parte da <iostream>, e ele extrai uma linha até um caractere de fim de linha
+o que permite que sejam usados espaços no texto
+
+para uso de arquivos é necessario uso da biblioteca <fstream> (uso de files como stream)
+
+ifstream fin(onde armazenar dados) para entrada de dados de um arquivo
+podem ser usados mais de um comando de entrada, o que é util para computações em multiplos cores
+
+ofstream fout(arquivo de saida) para armazenar dados em um arquivo
+o ofstream substitui os dados de um arquivo, se voce quer adicionar os dados no fim de um arquivo existente
+deve-se adicionar ios_base::app como segundo parametro, apos o nome do arquivo de saida. 
+app significa append
+ex:
+ofstream (saida.txt, ios_base::app);
+deve se notar o caminho de arquivo e diretorio, como comandos como .. e /
+
+stringstream (acho que é da <sstream>) puxa de uma string ao inves do teclado
+ex:
+int main (){
+    string s = "thiago 42 (31)0000-0000 123000.00";
+    stringstream sin(s);
+    string nome;
+    sin >>nome;
+    int idade;
+    sin>> idade;
+    string telefone;
+    sin>>telefone;
+    float saldo
+    sin>>saldo;
+    cout<<nome<<endl
+        <<idade<<endl
+        <<telefone<<endl
+        <<saldo<<endl;
+}
+o stringstream vai retirar sequencialmente cada pedaço do texto e parar no proximo espaço
+
+em caso de uso de outros separadores, como em arquivos csv por exemplo
+
+arquivo: "entrada.txt"
+João Carlos;12;médico
+Maria sousa;25;dentista
+Carlos prates;78;professor
+thiago noronha;42;empregado domestico
+----------
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+
+using namespace std;
+
+int main(){
+    ifstream fin("entrada.txt");
+    string linha
+    while (getline(fin, linha)){        //esse getline serve para iterar por cada linha
+        stringstream sin(linha);
+        string nome;
+        getline(sin, nome, ';');        //esse nested getline serve para iterar por dentro de uma propria linha
+        cout<< "nome: "<< nome <<endl;
+
+        string idade;
+        getline(sin, idade, ';');
+        cout<< "idade: "<< idade <<endl;
+
+        string idade;
+        getline(sin, profissao, ';');
+        cout<< "profissão: "<< profissao <<endl;
+        cout<<endl;
+    }
+    return 0;
+}
+o getline por padrão le ate o caractere de fim de linha, mas pode-se colocar um parametro diferente, como o ';' acima
+
+
+exemplo de conversao de string para numero
+
+int main(){
+    string s "14";
+    int i;
+    stringstream sin(s);
+    sin >> i;
+    cout << i + 1<<endl;
+
+    return 0;
+}
+ ou, de forma mais simples
+ 
+int main(){
+    string s "14";
+    int i;
+    stringstream(s) >> i; //o sin foi removido
+    cout << i + 1<<endl;
+
+    return 0;
+}
+

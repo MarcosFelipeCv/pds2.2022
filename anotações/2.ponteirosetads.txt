@@ -1,0 +1,74 @@
+AULA 7/4/22
+
+revendo ponteiros;
+um ponteiro guarda um numero, mas esse numero é um endereço de memoria
+
+#include <iostream>
+
+using namespace std;
+int main(){
+    int x = 3;
+    int* ptr = &x;          //agora o endereço de x está armazenado em ptr (& é um operador de dereferencia, ele aponta endereço)
+    cout<< ptr <<endl;      //isso vai imprimir o endereço em hexadecimal
+
+    //agora se eu fizer por ex
+
+    *ptr = 5;               //apontando nao para o endereço agora(o que seria apenas "ptr") mas apontando pro valor (que é 3)
+    cout<< x << endl;       //agora o valor de x foi mudado para 5
+return 0;
+}
+
+outro exemplo, com vetor
+int main(){
+    int v[3] = -11, -22, -45;
+    int* p0 = &v[0];
+    int* p1 = &v[1];
+    int* p2 = &v[2];
+    cout<<p0<<endl;
+    cout<<p1<<endl;
+    cout<<p2<<endl;
+                    //verifica-se que os enderecos estao a 4 numeros de distancia (que é o tamanho que um int ocupa)
+return 0;
+}
+
+ponteiro serve pra tudo. a teoria é facil, o que é dificil é conceber a quantidade de coisas que são possiveis com essa ferramenta
+eles dão acesso praticamente total à memoria do programa
+
+void trocar(int a, int b)       //essa funcao nao funciona pois em c++ os parametros sao passados por COPIA, eles não mudam a variavel original
+{
+    int aux;
+    aux = a;
+    a = b;
+    b = aux;
+}
+ int main(){
+     int x = 5;
+     int y = -8;
+     trocar(x,y);
+     cout<< x<< endl;
+     cout<< y << endl;
+     return 0;
+ }
+
+ para resolver esse problema podemos apenas passar as variaveis por ponteiros na função, e passar os endereços como parametro na main
+
+void trocar(int* a, int* b)     //agora funciona
+{
+    int aux;
+    aux = a;
+    a = b;
+    b = aux;
+}
+ int main(){
+     int x = 5;
+     int y = -8;
+     trocar(&x,&y);
+     cout<< x<< endl;
+     cout<< y << endl;
+     return 0;
+ }
+
+ponteiros para ponteiros existem tambem. é só usar mais de um asterisco
+
+-------TIPOS ABSTRATOS DE DADOS--------------------------------------
+
