@@ -61,7 +61,7 @@ while (cin>>nome){
 //cout<<nome<< " " <<saldo <<endl;
 
 if(s.find(nome) == s.end()){ //se a string inserida nao for encontrada
-   s[nome]= 0;                 //insere a string com valor chave 0
+   s[nome]= 1;                 //insere a string com valor chave 0
 //   cout<<nome<< " "<< saldo <<endl;
 }
 else {                      //se a string for encontrada
