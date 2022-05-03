@@ -40,3 +40,6 @@ int main() {
 
   return 0;
 }
+
+//Resposta: quando um array é passado por parametro, o que é passado não é o array inteiro, mas sim o ponteiro para o primeiro elemento
+//assim, como um ponteiro tem 8 espaços de memória, que divididos por sizeof(int) (que são 4) retorna sempre 2.

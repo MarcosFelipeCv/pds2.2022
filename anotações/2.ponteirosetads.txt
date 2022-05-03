@@ -70,5 +70,290 @@ void trocar(int* a, int* b)     //agora funciona
 
 ponteiros para ponteiros existem tambem. é só usar mais de um asterisco
 
+pra finalizar, esse código também funciona, ela é por referencia:
+
+void trocar(int& a, int& b)     //por referencia, nao por ponteiro
+{
+    int aux;
+    aux = a;
+    a = b;
+    b = aux;
+}
+ int main(){
+     int x = 5;
+     int y = -8;
+     trocar(&x,&y);
+     cout<< x<< endl;
+     cout<< y << endl;
+     return 0;
+ }
+ em teoria ele também deve funcionar
 -------TIPOS ABSTRATOS DE DADOS--------------------------------------
+uma string em c++ por ex é um TAD, ela necessita que importe a biblioteca
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main (){
+    string x = "Thiago";
+    x.append(" costa");                 //x.append concatena uma outra string em x
+    cout << "'"<<x.size() << "'"<<endl; //x.size() imprime o tamanho da string
+
+    return 0;
+}
+-----------------------------------------------------------------------------------
+AULA 12/04/22        TAD sequenciais
+aprendendo o TAD queue
+pq um queue e nao um vetor
+quando se usa queue, sabe-se exatamente o comportamento dela, legibilidade e simplicidade maiores
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int main (){        //esse programa soma e extrai os elementos de uma queue
+    queue<int> q;
+    int x;
+    while (cin>>x){
+          q.push(x);
+    }
+    int s = 0;
+
+      while (!q.empty()){
+        s = s+q.front();
+        q.pop();
+    }
+    cout<<s<<endl;
+  
+    return 0;
+}
+
+existe tambem a priority_queue, que também é parte do <queue>, mas ordena os elementos com o comparador ">"
+
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+int main (){        //esse programa ordena inteiros do maior pro menor
+    priority_queue<int> q;
+    int x;
+    while (cin>>x){
+          q.push(x);
+    }
+    int s = 0;
+
+      while (!q.empty()){
+        cout << q.top() << " ";
+        q.pop();
+    }
+    cout<<s<<endl;
+  
+    return 0;
+}
+
+outro tad: <vector>
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main (){       
+    int v[100]; //array classico de C++
+    vector<int> q(100);
+    q[0] =2;
+    q[1] =-4;
+    q[2] = q[0]*q[1];
+    cout<<q[2]<<endl;
+    return 0;
+}
+a diferenca entre array e o <vector> é que o tamanho de um vector é mutável ao longo do programa
+
+por padrão, quando um vector é inicializado, ele tem 0 elementos
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main (){       
+    vector<int> q;
+    q.push_back(3);   //isso adiciona mais um elemento no vetor, com o valor "3"
+    q[0] =3;
+    cout<<q[0]<<endl;
+    return 0;
+}
+
+pode-se passar um TAD como parametro
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void Imprimir(vector<string>& v){ //sempre passa-se por referencia para evitar a copia de tudo
+    for(int i=0; i<v.size(); i++){
+        cout<<v[i]<<endl;
+    }
+}
+
+int main (){       
+    vector<string> q;
+    string s;
+    while (cin >>s){
+        q.push_back(s);
+    }
+Imprimir(q);
+    return 0;
+}
+a passagem por referencia pode acabar alterando o tamanho ou valores do vector passado
+então deve-se passar com o qualificador const, para impedir isso.
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void Imprimir(const vector<string>& v){ //const evita que o parametro v seja alterado
+    for(int i=0; i<v.size(); i++){
+        cout<<v[i]<<endl;
+    }
+}
+
+int main (){       
+    vector<string> q;
+    string s;
+    while (cin >>s){
+        q.push_back(s);
+    }
+Imprimir(q);
+    return 0;
+}
+pode-se usar o comando resize() para redefinir o numero de elementos no vector, exemplo seria "q.resize(100);"
+
+uma matriz em c++ usando vector: (nao funcional, pseudocode)
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main (){       
+    vector <vector<int>> t;
+    t.resize(10);// o vetor tem 10 vetores dentro dele
+    t[0].resize(10); //cada vetor tem dez elementos também
+    .
+    ...
+    .
+    t[8].resize(10);
+    t[9].resize(10); //isso seria feito com um for
+
+    return 0;
+}
+
+o comando clear() limpa o vetor e torna-o para um com 0 elementos. exemplo: "t.clear();"
+-
+se voce quer um TAD que pode inserir elementos em qualquer posição, use o <list>
+nele, os elementos não estao contiguos, mas espalhados
+
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+int main (){       
+    list<string> q; // []
+    string s;
+        q.push_back("a"); //[a]
+        q.push_back("b"); //[a b]
+        q.push_front("c"); //[c a b]
+        q.push_front("d"); //[d c a b]
+        cout<< q.front()<< " | "<< q.back()<<endl;
+    
+//Imprimir(q);
+    return 0;
+}
+ o problema e a parte mais dificil do <list> é que não é possível usar os operadores []
+ isso ocorre pois os elementos não estão em posições contiguas de memória
+o codigo acima com uma funcao de imprimir
+
+
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+void Imprimir( list<string>& v){ //const deve ser retirado por algum motivo
+    list<string>::iterator it; //isso é um tipo de dado, um iterador chamado it. um ponteiro
+    for(it = v.begin(); it != v.end(); it++) {
+        cout << *it << endl;
+    }
+}
+
+int main (){       
+    list<string> q; // []
+    string s;
+        q.push_back("a"); //[a]
+        q.push_back("b"); //[a b]
+        q.push_front("c"); //[c a b]
+        q.push_front("d"); //[d c a b]
+        cout<< q.front()<< " | "<< q.back()<<endl;
+    
+Imprimir(q);
+    return 0;
+}
+
+por fim a operação insert() também pode inserir na frente ou no fim da lista, mas pode inserir no meio também
+ex antes "q.insert(q.begin(),"z");
+ex depois "q.insert(q.end(),"f");
+ex depois de 2 elementos, sendo o inserido o 3o:
+        list<string>::iterator ite= q.begin();
+        ite++;
+        ite++;
+        q.insert(ite,"g");
+
+para apagar um elemento especifico por ex
+apagar o 3o elemento
+        list<string>::iterator ite= q.begin();
+        ite++;
+        ite++;
+        q.erase(ite,"g");
+
+outros metodos são por ex o pop_back, pop_front, ver documentação para outras funções
+-------------------------------------------------------------------------------------------------------
+AULA 14/04          TAD associativos
+
+TAD stl set (conjunto)
+repetições não são inseridas em um conjunto matemático, é apenas de objetos únicos
+
+ex de uso de set
+---
+#include <iostream>
+#include <vector>
+#include <set>
+
+using namespace std;
+
+void Imprimir(const set<string>& x){
+    set<string>::iterator it;
+    for (it = x.begin();it != x.end();it++){
+        cout<< *it << endl;
+    }
+}
+
+int main (){       
+set<string> s;
+string nome;
+while (cin>>nome){
+    s.insert(nome);
+}
+Imprimir(s);
+    return 0;
+}
+
+vamos agora para o <map> mas que na tradução é melhor usar dicionário
 
