@@ -331,7 +331,7 @@ TAD stl set (conjunto)
 repetições não são inseridas em um conjunto matemático, é apenas de objetos únicos
 
 ex de uso de set
----
+
 #include <iostream>
 #include <vector>
 #include <set>
@@ -357,3 +357,73 @@ Imprimir(s);
 
 vamos agora para o <map> mas que na tradução é melhor usar dicionário
 
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+
+using namespace std;
+
+
+int main (){        
+map<string,double> s;
+string nome;
+double saldo;
+while (cin>>nome>>saldo){
+s[nome] = saldo;            //essa linha é "magica", ela insere o nome o saldo ao msm tempo.
+}
+    return 0;
+}
+
+alternativamente, dá para fazer com o comando insert e o TAD pair junto com o map, a main nesse caso seria:
+
+int main (){       
+map<string,double> s;
+string nome;
+double saldo;
+while (cin>>nome>>saldo){
+    pair<string, double> par;
+    par.first = nome;
+    par.second = saldo;
+    s.insert(par);          //a função (map).insert sempre recebe um TAD do tipo "pair"
+}
+    return 0;
+}       //essa implementação é menos eficiente, mas possível
+
+o codigo inteiro fica:
+
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+
+using namespace std;
+
+void Imprimir(const map<string, double>& x){
+    map<string, double>::const_iterator it;
+    for (it = x.begin();it != x.end();it++){
+        cout<< (*it).first << ": "<<(*it).second<< endl; //ou         cout<< it->first << ": "<< it->second<< endl;
+    }
+}
+
+int main (){       
+map<string,double> s;
+string nome;
+double saldo;
+while (cin>>nome>>saldo){
+   s[nome] =saldo;
+}
+Imprimir(s);
+    return 0;
+}
+
+
+//conteudo da in.txt
+// Joao 1.1
+// Maria 2.2
+// Thiago 3.3
+// Ana 4.4
+// Joao 1.2
+// Maria 2.3
+// Thiago 3.4
+// Ana 4.5

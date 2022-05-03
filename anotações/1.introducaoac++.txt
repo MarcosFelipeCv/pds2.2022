@@ -88,7 +88,7 @@ using namespace std;
 
 int main(){
     ifstream fin("entrada.txt");
-    string linha
+    string linha;
     while (getline(fin, linha)){        //esse getline serve para iterar por cada linha
         stringstream sin(linha);
         string nome;
@@ -99,7 +99,7 @@ int main(){
         getline(sin, idade, ';');
         cout<< "idade: "<< idade <<endl;
 
-        string idade;
+        string profissao;
         getline(sin, profissao, ';');
         cout<< "profissão: "<< profissao <<endl;
         cout<<endl;
